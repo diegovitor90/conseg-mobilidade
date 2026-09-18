@@ -1,0 +1,141 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-BR" class="h-full scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#07111f">
+  <title>{% block title %}Frota{% endblock %} | COSEG Mobilidade</title>
+  <link rel="icon" href="{% static 'reservas/img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'reservas/css/app.css' %}">
+  <script src="{% static 'reservas/js/app.js' %}" defer></script>
+  <style>
+    :root {
+      --app-bg: #f4f7fb;
+      --app-bg-strong: #eaf1f9;
+      --app-surface: rgba(255, 255, 255, 0.9);
+      --app-surface-strong: #ffffff;
+      --app-border: #dfe7f1;
+      --app-text: #0f172a;
+      --app-muted: #475569;
+      --app-brand: #0f172a;
+      --app-brand-soft: #0ea5e9;
+      --app-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    html {
+      font-size: 17px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      background:
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.12), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.1), transparent 30%),
+        linear-gradient(180deg, var(--app-bg) 0%, #eef3f9 100%);
+      color: var(--app-text);
+      line-height: 1.7;
+      letter-spacing: -0.01em;
+    }
+
+    p, li, td, th, label, input, select, textarea, button, small, span {
+      line-height: 1.6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body, body * {
+      font-size: 20px !important;
+    }
+
+    a, button, input, select {
+      transition: all 0.2s ease;
+    }
+
+    .text-\[9px\],
+    .text-\[10px\],
+    .text-\[11px\] {
+      font-size: 0.875rem !important;
+      line-height: 1.5 !important;
+    }
+
+    .text-\[15px\] {
+      font-size: 0.9375rem !important;
+    }
+
+    main {
+      min-height: calc(100vh - 12rem);
+    }
+
+    .mx-auto.max-w-7xl > section,
+    .mx-auto.max-w-7xl > form,
+    .mx-auto.max-w-7xl > div {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: var(--app-shadow);
+    }
+
+    input, select, textarea, button {
+      font: inherit;
+    }
+
+    @media (max-width: 640px) {
+      html {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-950 antialiased selection:bg-cyan-200 selection:text-slate-950">
+  <a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-white focus:px-4 focus:py-3 focus:font-semibold focus:shadow-xl" href="#conteudo">Ir para o conteúdo</a>
+  <div class="min-h-screen lg:grid lg:grid-cols-[17.5rem_1fr]">
+    <aside id="menu-lateral" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col overflow-hidden border-r border-white/10 bg-[#07111f] text-white shadow-2xl transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:w-auto lg:translate-x-0" aria-label="Menu principal">
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,.15),transparent_34%),radial-gradient(circle_at_90%_85%,rgba(99,102,241,.12),transparent_35%)]"></div>
+      <div class="relative flex h-full flex-col p-5">
+        <div class="flex items-center justify-between">
+          <a class="group flex items-center gap-3" href="{% url 'reservas:veiculo_lista' %}" aria-label="COSEG Mobilidade">
+            <span class="grid size-11 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-indigo-500 font-black text-slate-950 shadow-lg shadow-cyan-950/30 transition group-hover:scale-105">C</span>
+            <span class="text-[15px] font-extrabold tracking-[.16em]">COSEG<small class="mt-0.5 block text-[9px] font-medium tracking-[.32em] text-cyan-300">MOBILIDADE</small></span>
+          </a>
+          <button id="fechar-menu" class="grid size-10 place-items-center rounded-xl text-slate-400 hover:bg-white/10 hover:text-white lg:hidden" type="button" aria-label="Fechar menu"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        </div>
+        <p class="mb-3 mt-10 px-3 text-[10px] font-bold tracking-[.22em] text-slate-500">OPERAÇÃO</p>
+        <nav class="space-y-1.5" aria-label="Funcionalidades">
+          <a class="flex items-center gap-3 rounded-2xl bg-white/10 px-3.5 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-white/10" href="{% url 'reservas:veiculo_lista' %}" {% if user.is_authenticated %}aria-current="page"{% endif %}>
+            <span class="grid size-9 place-items-center rounded-xl bg-cyan-400/15 text-cyan-300"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 15h18M5 15l1-5h12l1 5M6 18h.01M18 18h.01M5 21v-3h14v3"/><path d="M8 10V7h8v3"/></svg></span>Veículos
+            <span class="ml-auto size-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_#67e8f9]"></span>
+          </a>
+          {% if user.is_staff and perms.reservas.view_reserva %}<a class="flex items-center gap-3 rounded-2xl px-3.5 py-3 text-sm font-medium text-slate-400 transition hover:bg-white/[.07] hover:text-white" href="{% url 'admin:reservas_reserva_changelist' %}"><span class="grid size-9 place-items-center rounded-xl bg-white/[.06]"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg></span>Reservas <small class="ml-auto rounded-full bg-white/[.07] px-2 py-1 text-[9px] font-bold tracking-wider text-slate-500">ADMIN</small></a>{% endif %}
+          {% if user.is_staff and perms.reservas.view_motorista %}<a class="flex items-center gap-3 rounded-2xl px-3.5 py-3 text-sm font-medium text-slate-400 transition hover:bg-white/[.07] hover:text-white" href="{% url 'admin:reservas_motorista_changelist' %}"><span class="grid size-9 place-items-center rounded-xl bg-white/[.06]"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Motoristas <small class="ml-auto rounded-full bg-white/[.07] px-2 py-1 text-[9px] font-bold tracking-wider text-slate-500">ADMIN</small></a>{% endif %}
+        </nav>
+        <div class="relative mt-auto overflow-hidden rounded-3xl border border-white/10 bg-white/[.06] p-4 backdrop-blur">
+          <div class="mb-3 flex items-center gap-2 text-xs font-semibold text-emerald-300"><span class="size-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"></span>Sistema operacional</div>
+          <p class="text-sm font-semibold text-white">Uma base para toda a frota.</p><p class="mt-1 text-xs leading-5 text-slate-400">Cadastros e reservas centralizados com segurança.</p>
+        </div>
+        <p class="mt-5 px-1 text-[10px] leading-4 text-slate-600">Projeto acadêmico<br>Programação para Web · UNDB</p>
+      </div>
+    </aside>
+    <div id="menu-overlay" class="fixed inset-0 z-40 hidden bg-slate-950/60 backdrop-blur-sm lg:hidden"></div>
+    <div class="flex min-w-0 flex-col">
+      <header class="sticky top-0 z-30 flex h-16 items-center border-b border-slate-200/80 bg-white/80 px-4 backdrop-blur-xl sm:px-6 lg:px-10">
+        <button id="abrir-menu" class="mr-3 grid size-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm lg:hidden" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div><p class="text-sm font-semibold text-slate-900">Gestão da frota</p><p class="hidden text-xs text-slate-500 sm:block">Controle operacional do COSEG</p></div>
+        <div class="ml-auto flex items-center gap-3">
+          {% if user.is_authenticated %}<div class="hidden text-right sm:block"><p class="text-xs font-semibold text-slate-900">{{ user.get_username }}</p><p class="text-[10px] uppercase tracking-wider text-slate-400">Usuário interno</p></div><span class="grid size-9 place-items-center rounded-full bg-gradient-to-br from-cyan-100 to-indigo-100 text-xs font-extrabold uppercase text-indigo-700">{{ user.get_username|slice:':1' }}</span><form method="post" action="{% url 'sair' %}">{% csrf_token %}<button class="rounded-xl px-3 py-2 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" type="submit">Sair</button></form>{% else %}<span class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-500">Acesso interno</span>{% endif %}
+        </div>
+      </header>
+      <main id="conteudo" class="relative flex-1 overflow-hidden px-4 py-7 sm:px-6 lg:px-10 lg:py-10" tabindex="-1">
+        <div class="pointer-events-none absolute right-0 top-0 -z-10 h-80 w-80 rounded-full bg-cyan-100/40 blur-3xl"></div>
+        {% if messages %}<div class="mx-auto mb-6 max-w-7xl space-y-3" aria-label="Avisos">{% for message in messages %}<div class="flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium shadow-sm {% if message.tags == 'error' %}border-rose-200 bg-rose-50 text-rose-800{% else %}border-emerald-200 bg-emerald-50 text-emerald-800{% endif %}" role="{% if message.tags == 'error' %}alert{% else %}status{% endif %}"><span class="grid size-7 place-items-center rounded-full {% if message.tags == 'error' %}bg-rose-100{% else %}bg-emerald-100{% endif %}">{% if message.tags == 'error' %}!{% else %}✓{% endif %}</span>{{ message }}</div>{% endfor %}</div>{% endif %}
+        <div class="mx-auto max-w-7xl">{% block content %}{% endblock %}</div>
+      </main>
+      <footer class="flex flex-col gap-1 border-t border-slate-200 bg-white px-6 py-5 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between lg:px-10"><span>© COSEG Mobilidade</span><span>Interface integrada ao Django · UNDB</span></footer>
+    </div>
+  </div>
+</body>
+</html>

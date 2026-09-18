@@ -1,0 +1,95 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        :root .admin-interface {
+            --admin-interface-header-background-color: #07111f;
+            --admin-interface-header-text-color: #e2f3ff;
+            --admin-interface-header-link-color: #ffffff;
+            --admin-interface-header-link-hover-color: #7dd3fc;
+            --admin-interface-module-background-color: #0f172a;
+            --admin-interface-module-text-color: #e2f3ff;
+            --admin-interface-module-link-color: #38bdf8;
+            --admin-interface-module-link-hover-color: #7dd3fc;
+            --admin-interface-generic-link-color: #38bdf8;
+            --admin-interface-generic-link-hover-color: #7dd3fc;
+            --admin-interface-save-button-background-color: #0ea5e9;
+            --admin-interface-save-button-background-hover-color: #0284c7;
+            --admin-interface-save-button-text-color: #f8fdff;
+            --admin-interface-delete-button-background-color: #ef4444;
+            --admin-interface-delete-button-background-hover-color: #dc2626;
+            --admin-interface-delete-button-text-color: #ffffff;
+            --admin-interface-main-border-top: 0;
+        }
+
+        .admin-interface #header {
+            padding: 0.8rem 1.4rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.08);
+        }
+
+        .admin-interface #branding h1 {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0;
+        }
+
+        .admin-interface #branding h1 img.logo {
+            width: 44px;
+            height: 44px;
+            max-width: 44px;
+            max-height: 44px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .admin-interface #branding h1 span {
+            font-size: 1.02rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .admin-interface .module,
+        .admin-interface .module .collapse,
+        .admin-interface .change-list,
+        .admin-interface .change-form,
+        .admin-interface .dashboard {
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 18px;
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .admin-interface .module h2,
+        .admin-interface .module caption,
+        .admin-interface .object-tools,
+        .admin-interface .submit-row {
+            border-radius: 14px 14px 0 0;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(15, 23, 42, 0.03));
+        }
+
+        .admin-interface .button,
+        .admin-interface input[type="submit"],
+        .admin-interface input[type="button"],
+        .admin-interface .button.default {
+            border-radius: 12px;
+            padding: 0.7rem 1.1rem;
+            font-weight: 700;
+            border: none;
+            box-shadow: none;
+        }
+
+        .admin-interface #main {
+            padding-top: 1.4rem;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,12 @@
+{
+  "name": "coseg-mobilidade",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./reservas/static/reservas/css/input.css -o ./reservas/static/reservas/css/app.css --minify",
+    "watch:css": "tailwindcss -i ./reservas/static/reservas/css/input.css -o ./reservas/static/reservas/css/app.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "tailwindcss": "4.3.3"
+  }
+}

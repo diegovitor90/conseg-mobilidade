@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="COSEG logo">
+  <defs>
+    <linearGradient id="cosegGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#07111f"/>
+  <circle cx="74" cy="64" r="38" fill="none" stroke="url(#cosegGradient)" stroke-width="12"/>
+  <path d="M80 28 L58 28 A38 38 0 1 0 58 100 L80 100" fill="none" stroke="#e0f2fe" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+

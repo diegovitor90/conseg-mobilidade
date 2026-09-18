@@ -1,0 +1,401 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ title }} | COSEG Mobilidade
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            <img class="logo" src="{% static 'reservas/img/favicon.svg' %}" alt="COSEG">
+            <span>COSEG Mobilidade</span>
+        </a>
+    </h1>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'reservas/css/app.css' %}">
+    <style>
+        :root .admin-interface {
+            --admin-interface-header-background-color: #07111f;
+            --admin-interface-header-text-color: #f8fafc;
+            --admin-interface-header-link-color: #ffffff;
+            --admin-interface-header-link-hover-color: #67e8f9;
+            --admin-interface-module-background-color: #ffffff;
+            --admin-interface-module-text-color: #0f172a;
+            --admin-interface-module-link-color: #0891b2;
+            --admin-interface-module-link-hover-color: #0e7490;
+            --admin-interface-generic-link-color: #0891b2;
+            --admin-interface-generic-link-hover-color: #0e7490;
+            --admin-interface-save-button-background-color: #07111f;
+            --admin-interface-save-button-background-hover-color: #0ea5e9;
+            --admin-interface-save-button-text-color: #f8fdff;
+            --admin-interface-delete-button-background-color: #ef4444;
+            --admin-interface-delete-button-background-hover-color: #dc2626;
+            --admin-interface-delete-button-text-color: #ffffff;
+            --admin-interface-main-border-top: 0;
+            --admin-interface-body-background-color: #f4f7fb;
+            --admin-interface-module-border-radius: 18px;
+        }
+
+        .admin-interface {
+            background:
+                radial-gradient(circle at top left, rgba(14, 165, 233, 0.12), transparent 25%),
+                radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.10), transparent 30%),
+                linear-gradient(180deg, #f4f7fb 0%, #eef3f9 100%);
+            color: #0f172a;
+            font-family: Inter, "Segoe UI", sans-serif;
+        }
+
+        body,
+        body * {
+            font-size: 16px !important;
+        }
+
+        .admin-interface #header {
+            padding: 0.9rem 1.4rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.08);
+            background: #07111f;
+        }
+
+        .admin-interface #branding h1 {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0;
+        }
+
+        .admin-interface #branding h1 img.logo {
+            width: 42px;
+            height: 42px;
+            max-width: 42px;
+            max-height: 42px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .admin-interface #branding h1 span {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            color: #e2f3ff;
+        }
+
+        .admin-interface #user-tools {
+            gap: 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .admin-interface #main {
+            padding-top: 1.6rem;
+            padding-bottom: 2rem;
+        }
+
+        .admin-interface .module,
+        .admin-interface .module .collapse,
+        .admin-interface .change-list,
+        .admin-interface .change-form,
+        .admin-interface .dashboard,
+        .admin-interface .app-list,
+        .admin-interface .model-list {
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 18px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+            background: rgba(255, 255, 255, 0.96);
+            overflow: hidden;
+        }
+
+        .admin-interface .module h2,
+        .admin-interface .module caption,
+        .admin-interface .object-tools,
+        .admin-interface .submit-row,
+        .admin-interface .app-list .app,
+        .admin-interface .model-list {
+            background: #f8fafc;
+        }
+
+        .admin-interface .button,
+        .admin-interface input[type="submit"],
+        .admin-interface input[type="button"],
+        .admin-interface .button.default,
+        .admin-interface .button.secondary {
+            border-radius: 12px;
+            padding: 0.7rem 1.1rem;
+            font-weight: 700;
+            border: none;
+            box-shadow: none;
+            transition: all 0.2s ease;
+        }
+
+        .admin-interface .button,
+        .admin-interface input[type="submit"],
+        .admin-interface .button.default {
+            background: #07111f;
+            color: #f8fdff;
+        }
+
+        .admin-interface .button:hover,
+        .admin-interface input[type="submit"]:hover,
+        .admin-interface .button.default:hover {
+            background: #0ea5e9;
+            transform: translateY(-1px);
+        }
+
+        .admin-interface input,
+        .admin-interface select,
+        .admin-interface textarea,
+        .admin-interface .vTextField,
+        .admin-interface .vLargeTextField {
+            border-radius: 12px;
+            border: 1px solid #dfe7f1;
+            padding: 0.7rem 0.85rem;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.02);
+        }
+
+        .admin-interface .field-box,
+        .admin-interface .fieldset,
+        .admin-interface .inline-related {
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .admin-interface .breadcrumbs {
+            background: transparent;
+            padding: 0 0 1rem;
+            color: #475569;
+            border: none;
+        }
+
+        .admin-interface .breadcrumbs a {
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+
+        .admin-interface h1,
+        .admin-interface h2,
+        .admin-interface h3 {
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .admin-interface #nav-sidebar {
+            flex: 0 0 272px;
+            left: -272px;
+            margin-left: -272px;
+            padding: 1.5rem 1rem;
+            background: #07111f;
+            border-right: 1px solid rgba(125, 211, 252, 0.16);
+            box-shadow: 18px 0 36px rgba(2, 6, 23, 0.12);
+        }
+
+        .admin-interface #nav-sidebar .module {
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            border-radius: 0.9rem;
+            background: rgba(15, 23, 42, 0.82);
+            box-shadow: none;
+            overflow: hidden;
+        }
+
+        .admin-interface #nav-sidebar .module caption,
+        .admin-interface #nav-sidebar .module h2 {
+            padding: 0.75rem 0.9rem;
+            background: rgba(14, 165, 233, 0.12);
+            color: #e2f3ff;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .admin-interface #nav-sidebar .module a,
+        .admin-interface #nav-sidebar .module th,
+        .admin-interface #nav-sidebar .module td {
+            color: #cbd5e1;
+        }
+
+        .admin-interface #nav-sidebar .module a {
+            display: block;
+            padding: 0.6rem 0.9rem;
+            border-radius: 0.6rem;
+            font-size: 0.85rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .admin-interface #nav-sidebar .module a:hover,
+        .admin-interface #nav-sidebar .current-model,
+        .admin-interface #nav-sidebar .current-app .section {
+            background: rgba(14, 165, 233, 0.18);
+            color: #7dd3fc;
+        }
+
+        .admin-interface #nav-filter {
+            width: 100%;
+            height: auto;
+            margin: 0 0 1.25rem;
+            padding: 0.7rem 0.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+        }
+
+        .admin-interface #nav-filter::placeholder {
+            color: #94a3b8;
+        }
+
+        .admin-interface #toggle-nav-sidebar {
+            background: #0ea5e9;
+            color: #ffffff;
+            border: none;
+            box-shadow: 4px 4px 12px rgba(2, 132, 199, 0.28);
+        }
+
+        @media (min-width: 1280px) {
+            .admin-interface #main.shifted > #toggle-nav-sidebar {
+                left: 271px;
+            }
+
+            .admin-interface.change-list:not(.popup) #main.shifted > #nav-sidebar + .content,
+            .admin-interface.change-form:not(.popup) #main.shifted > #nav-sidebar + .content {
+                max-width: calc(100% - 272px);
+            }
+        }
+
+        .admin-interface #header {
+            min-height: 4.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #07111f;
+        }
+
+        .admin-interface #branding h1 span {
+            color: #f8fafc;
+        }
+
+        .admin-interface #user-tools {
+            display: flex;
+            align-items: center;
+            color: #cbd5e1;
+        }
+
+        .admin-interface #user-tools a,
+        .admin-interface #user-tools #logout-form button {
+            border-radius: 0.55rem;
+            padding: 0.45rem 0.65rem;
+        }
+
+        .admin-interface > #container > #main {
+            background: transparent;
+        }
+
+        .admin-interface #main > #nav-sidebar + .content {
+            background: transparent;
+        }
+
+        body.login {
+            background:
+                radial-gradient(circle at top left, rgba(14, 165, 233, 0.12), transparent 25%),
+                radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.10), transparent 30%),
+                linear-gradient(180deg, #f4f7fb 0%, #eef3f9 100%);
+        }
+
+        body.login #container {
+            min-height: 100vh;
+        }
+
+        body.login #header {
+            background: #07111f;
+        }
+
+        body.login #content {
+            width: min(100% - 2rem, 28rem);
+            margin: 4rem auto;
+            padding: 2rem;
+            border: 1px solid #dfe7f1;
+            border-radius: 1.75rem;
+            background: #ffffff;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        body.login #content h1 {
+            color: #0f172a;
+            font-size: 1.5rem;
+        }
+
+        body.login #content::before {
+            content: "";
+            display: block;
+            height: 0.25rem;
+            margin: -2rem -2rem 1.75rem;
+            border-radius: 1.75rem 1.75rem 0 0;
+            background: linear-gradient(90deg, #22d3ee, #6366f1, #8b5cf6);
+        }
+
+        body.login #content input[type="text"],
+        body.login #content input[type="password"] {
+            width: 100%;
+            border: 1px solid #dfe7f1;
+            border-radius: 0.75rem;
+            padding: 0.75rem 0.85rem;
+            background: #ffffff;
+        }
+
+        body.login #content input:focus {
+            border-color: #0ea5e9;
+            outline: 0;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
+        }
+
+        body.login #content .submit-row {
+            padding: 1rem 0 0;
+            background: transparent;
+            border: 0;
+        }
+
+        body.login #content input[type="submit"] {
+            width: 100%;
+            border-radius: 0.75rem;
+            background: #020617;
+            color: #ffffff;
+        }
+
+        body.login #content input[type="submit"]:hover {
+            background: #0ea5e9;
+        }
+
+        .admin-interface .breadcrumbs {
+            color: #64748b;
+        }
+
+        .admin-interface .breadcrumbs a,
+        .admin-interface a {
+            color: #0891b2;
+        }
+
+        .admin-interface .breadcrumbs a:hover,
+        .admin-interface a:hover {
+            color: #0e7490;
+        }
+
+        .admin-interface .object-tools a,
+        .admin-interface .submit-row input.default {
+            background: #07111f;
+            color: #ffffff;
+        }
+
+        .admin-interface .object-tools a:hover,
+        .admin-interface .submit-row input.default:hover {
+            background: #0ea5e9;
+        }
+    </style>
+{% endblock %}
