@@ -31,6 +31,41 @@ O **COSEG Mobilidade** é uma aplicação web que organiza esse processo. Nesta 
 - 50 testes automatizados de models, forms, views, permissões e integração
 - Comando opcional para popular uma frota didática com 8 veículos leves e 2 coletivos
 
+## Evolução do projeto
+
+O COSEG Mobilidade evoluiu de uma primeira versão funcional baseada no Django Admin para uma interface própria de gestão operacional da frota, mantendo a integração com o backend, autenticação e regras de negócio do Django.
+
+### Versão 1.0 — Base funcional no Django Admin
+
+A primeira entrega estruturou as entidades de veículos, motoristas e reservas, utilizando o Django Admin para administrar os dados e validar o fluxo inicial do sistema.
+
+- Cadastro e edição de veículos
+- Registro inicial de reservas
+- Administração de dados pelo Django Admin
+- Estruturação da base de dados e das entidades do domínio
+
+| Cadastro de reserva | Edição de veículo |
+|---|---|
+| ![Cadastro de reserva na versão 1.0](docs/images/v1-admin-reservas.jpg) | ![Edição de veículo na versão 1.0](docs/images/v1-admin-veiculo.jpg) |
+
+### Versão 2.0 — Interface própria de gestão da frota
+
+A segunda versão introduziu uma interface própria voltada à operação, com identidade visual, autenticação integrada e melhor experiência de uso para gestão de veículos.
+
+- Tela de login institucional integrada ao Django
+- Listagem de veículos com pesquisa, filtros e paginação
+- Visualização de categoria, capacidade e situação dos veículos
+- Ações de detalhes e gestão conforme permissões do usuário
+- Interface responsiva com foco em operação e usabilidade
+
+| Login | Gestão de veículos |
+|---|---|
+| ![Tela de login da versão 2.0](docs/images/v2-login.jpg) | ![Listagem de veículos da versão 2.0](docs/images/v2-lista-veiculos.jpg) |
+
+| Detalhe de veículo |
+|---|
+| ![Detalhe e edição de veículo na versão 2.0](docs/images/v2-detalhe-veiculo.jpg) |
+
 ## Tecnologias
 
 - Python 3.12+
