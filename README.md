@@ -46,7 +46,7 @@ A primeira entrega estruturou as entidades de veículos, motoristas e reservas, 
 
 | Cadastro de reserva | Edição de veículo |
 |---|---|
-| ![Cadastro de reserva na versão 1.0](docs/images/v1-admin-reservas.jpg) | ![Edição de veículo na versão 1.0](docs/images/v1-admin-veiculo.jpg) |
+| ![Cadastro de reserva na versão 1.0]([docs/images/v1-admin-reservas.jpg](https://github.com/diegovitor90/conseg-mobilidade/blob/main/docs/v1-admin-reservas.png)) | ![Edição de veículo na versão 1.0]([[docs/images/v1-admin-veiculo.jpg](https://github.com/diegovitor90/conseg-mobilidade/blob/main/docs/v1-admin-reservas.png)](https://github.com/diegovitor90/conseg-mobilidade/blob/main/docs/v1-admin-veiculo.png)) |
 
 ### Versão 2.0 — Interface própria de gestão da frota
 
@@ -60,11 +60,11 @@ A segunda versão introduziu uma interface própria voltada à operação, com i
 
 | Login | Gestão de veículos |
 |---|---|
-| ![Tela de login da versão 2.0](docs/images/v2-login.jpg) | ![Listagem de veículos da versão 2.0](docs/images/v2-lista-veiculos.jpg) |
+| ![Tela de login da versão 2.0]([docs/images/v2-login.jpg](https://github.com/diegovitor90/conseg-mobilidade/blob/main/docs/v2-login.png)) | ![Listagem de veículos da versão 2.0]([docs/images/v2-lista-veiculos.jpg](https://github.com/diegovitor90/conseg-mobilidade/blob/main/docs/v2-lista-veiculos.png)) |
 
 | Detalhe de veículo |
 |---|
-| ![Detalhe e edição de veículo na versão 2.0](docs/images/v2-detalhe-veiculo.jpg) |
+| ![Detalhe e edição de veículo na versão 2.0]([docs/images/v2-detalhe-veiculo.jpg](https://github.com/diegovitor90/conseg-mobilidade/blob/main/docs/v2-detalhe-veiculo.png)) |
 
 ## Tecnologias
 
