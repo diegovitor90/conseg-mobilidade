@@ -1,56 +1,261 @@
 # COSEG Mobilidade
 
-Primeira entrega técnica do PBL 2: CRUD próprio de veículos dentro do app `reservas`, com interface responsiva e integração ao Django.
+Sistema acadêmico de gestão de mobilidade e reservas de veículos, desenvolvido em Python e Django. O projeto foi construído para centralizar o cadastro e a administração de veículos, motoristas e reservas, aplicando regras de negócio para disponibilidade, capacidade, datas e conflitos de horários.
 
-## O que veio no ZIP e o que foi feito
+> Primeira entrega técnica do PBL 2 da disciplina de Programação para Web — Engenharia de Software, UNDB.
 
-O ZIP recebido continha somente o projeto inicial em `setup/`, além de dois ambientes virtuais Windows. Não continha o app `reservas`, migrations próprias ou banco SQLite. O Board e o README descreviam os models, mas esses arquivos ainda não estavam no pacote.
+## Visão geral
 
-Esta versão preserva o nome **setup** e o ponto de entrada `manage.py`. Acrescenta os models descritos nos documentos e adapta o padrão de CRUD de veículos do projeto [Oficina Web](https://github.com/diegovitor90/oficina-web), revisão `d4e3cef2e3bb5b03fa661cd2f1d701897af59555`. Nenhum app da Oficina foi simplesmente renomeado.
+Processos de reserva de veículos podem gerar conflitos de horário, alocação acima da capacidade, registros inconsistentes e perda de histórico quando não há uma gestão centralizada.
 
-O README original recebido foi preservado em `docs/README_PBL1_ORIGINAL.md`. O Board e os slides enviados não foram alterados.
+O **COSEG Mobilidade** é uma aplicação web que organiza esse processo. Nesta versão, o foco está no CRUD próprio de veículos e na base de domínio necessária para as próximas etapas de reservas e motoristas.
 
-**Atenção:** se a versão no seu computador já tiver models, banco ou migrations que não vieram neste ZIP, não substitua esses arquivos diretamente. Compare as versões antes de integrar. Não apague migrations nem seu banco.
+## Principais entregas
 
-## O que está pronto
+- CRUD de veículos fora do Django Admin:
+  - Cadastro
+  - Listagem
+  - Pesquisa
+  - Filtros
+  - Paginação
+  - Consulta de detalhes
+  - Edição
+  - Desativação e reativação
+  - Exclusão protegida
+- Modelagem de dados para `Veiculo`, `Motorista` e `Reserva`
+- Regras de negócio implementadas no domínio da aplicação
+- Login e permissões por operação
+- Formulários protegidos com CSRF, validação por campo e mensagens de sucesso
+- Interface responsiva com HTML semântico, Tailwind CSS e JavaScript
+- Administração dos três modelos pelo Django Admin
+- 50 testes automatizados de models, forms, views, permissões e integração
+- Comando opcional para popular uma frota didática com 8 veículos leves e 2 coletivos
 
-- Models `Veiculo`, `Motorista` e `Reserva`, com migration inicial.
-- CRUD de veículos fora do Admin: cadastrar, listar, pesquisar, filtrar, paginar, consultar, editar e excluir.
-- Desativação e reativação sem apagar histórico.
-- Exclusão real apenas para veículos sem reservas vinculadas.
-- Login e permissões por operação, usando as contas do próprio Django.
-- Formulários com CSRF, erros por campo e mensagens de sucesso.
-- HTML semântico, Tailwind CSS 4 compilado localmente e JavaScript para responsividade e previsão da capacidade.
-- Admin para veículos, motoristas e reservas.
-- 50 testes automatizados de models, forms, views, permissões e integração.
-- Comando opcional de frota didática: 8 veículos leves e 2 coletivos.
+## Tecnologias
 
-**Esta entrega não encerra o PBL 2.** Os CRUDs próprios de reservas e motoristas, API JSON, Board final e apresentação permanecem como próximas etapas. Reservas e motoristas são gerenciados pelo Admin nesta versão. Não houve publicação nem alteração no GitHub.
+- Python 3.12+
+- Django 6.1.1
+- Django ORM
+- SQLite
+- HTML5
+- Tailwind CSS 4
+- JavaScript
+- Git e GitHub
+- Django Test Framework
 
-## Executar no Windows
+## Arquitetura e organização
 
-Requer **Python 3.12 ou superior**. Validado com Python 3.12 e Django 6.1.1. O ambiente virtual deve ser criado novamente no computador de quem executa.
+```text
+setup/
+├── setup/                         # Configurações e rotas principais do Django
+├── reservas/
+│   ├── models.py                  # Entidades e regras de negócio
+│   ├── forms.py                   # ModelForm de veículo e formulário de login
+│   ├── views.py                   # CRUD de veículos
+│   ├── tests.py                   # Testes automatizados
+│   ├── templates/                 # Páginas da aplicação
+│   └── static/reservas/           # CSS, JavaScript e ícones
+├── manage.py
+├── package.json                   # Comandos e versão do Tailwind CSS
+└── requirements.txt
 
-1. Extraia o ZIP em uma pasta separada.
-2. Abra o terminal na pasta `undb_desenvolvimento_web`.
-3. Execute:
+docs/
+├── IMPLEMENTACAO.md               # Explicação da adaptação técnica
+├── CHECKLIST_PBL2.md              # Próximas etapas do PBL 2
+└── README_PBL1_ORIGINAL.md        # README original preservado
+```
+
+## Funcionalidades implementadas
+
+### Gestão de veículos
+
+A aplicação permite administrar veículos por uma interface própria, sem depender exclusivamente do Django Admin.
+
+- Criar, consultar, editar e excluir veículos
+- Pesquisar por código ou informações do veículo
+- Filtrar e paginar resultados
+- Desativar e reativar veículos sem apagar o histórico
+- Excluir definitivamente apenas veículos sem reservas vinculadas
+- Exibir botões e ações conforme a permissão do usuário
+
+### Autenticação e permissões
+
+O sistema utiliza autenticação nativa do Django.
+
+- Login e logout
+- Controle de acesso por permissões do Django
+- Proteção de rotas no servidor
+- Ocultação de ações não permitidas na interface
+- Proteção CSRF em formulários e operações sensíveis
+- Confirmação explícita para desativação e exclusão
+
+A interface própria não exige que o usuário tenha `is_staff`. O Django Admin exige usuário da equipe e permissões compatíveis com cada model.
+
+### Qualidade e testes
+
+O projeto possui 50 testes automatizados cobrindo:
+
+- Models
+- Forms
+- Views
+- Permissões
+- Integrações
+- Fluxos de CRUD
+- Regras de negócio
+- Proteções de exclusão e desativação
+
+## Regras de negócio
+
+As regras abaixo são aplicadas pelo backend. O JavaScript melhora a experiência da interface, mas não substitui a validação no servidor.
+
+### Veículos
+
+- Veículos leves possuem capacidade de 4 passageiros.
+- Veículos coletivos possuem capacidade de 18 passageiros.
+- A capacidade é calculada pelo model e não é aceita diretamente do navegador.
+- O código do veículo deve ser único.
+- Códigos são salvos em letras maiúsculas e sem espaços nas extremidades.
+- Veículos podem ser desativados sem apagar o histórico.
+- Veículos com reservas vinculadas não podem ser excluídos.
+- A categoria de veículo com reservas não pode ser alterada, preservando a interpretação do histórico.
+- Veículos com reservas em andamento ou futuras não podem ser desativados até que as reservas sejam realocadas.
+
+### Reservas
+
+- A quantidade de passageiros deve estar entre 1 e 18.
+- Uma nova reserva não pode utilizar uma data passada.
+- O horário de retorno deve ser posterior ao horário de saída no mesmo dia.
+- Não pode haver sobreposição de reserva para o mesmo veículo.
+- Não pode haver sobreposição de reserva para o mesmo motorista.
+- Intervalos adjacentes são permitidos.
+- Veículos e motoristas inativos não podem receber novas reservas.
+- A categoria pretendida é uma preferência; a capacidade do veículo efetivamente alocado determina a adequação.
+- Reservas passadas podem ter dados descritivos corrigidos, mas não permitem alteração de data, horários, quantidade de passageiros ou alocação.
+
+## Rotas implementadas
+
+| Rota | Função |
+|---|---|
+| `/` | Redireciona para a lista de veículos |
+| `/veiculos/` | Lista, pesquisa, filtros e paginação |
+| `/veiculos/novo/` | Cadastro de veículo |
+| `/veiculos/<id>/` | Detalhes do veículo |
+| `/veiculos/<id>/editar/` | Edição e reativação |
+| `/veiculos/<id>/desativar/` | Confirmação e desativação por `POST` |
+| `/veiculos/<id>/excluir/` | Confirmação e exclusão protegida por `POST` |
+| `/contas/entrar/` | Login |
+| `/contas/sair/` | Logout por `POST` |
+| `/admin/` | Administração dos models |
+
+Todas as rotas de veículos utilizam o namespace `reservas`.
+
+Exemplo:
+
+```python
+reservas:veiculo_lista
+```
+
+## Permissões necessárias
+
+O superusuário possui acesso completo.
+
+Para usuários comuns, configure permissões no Django Admin por meio de **Usuários** ou **Grupos**.
+
+| Permissão | Ação permitida |
+|---|---|
+| `view_veiculo` | Consultar veículos |
+| `view_veiculo` + `add_veiculo` | Cadastrar veículos |
+| `view_veiculo` + `change_veiculo` | Editar, desativar e reativar veículos |
+| `view_veiculo` + `delete_veiculo` | Excluir veículos sem reservas vinculadas |
+
+## Como executar localmente
+
+### Pré-requisitos
+
+- Python 3.12 ou superior
+- Git
+- PowerShell, terminal Linux ou macOS
+- Node.js é opcional; necessário apenas para alterar ou recompilar os estilos Tailwind CSS
+
+O projeto foi validado com:
+
+```text
+Python 3.12
+Django 6.1.1
+```
+
+### 1. Clone o repositório
+
+```bash
+git clone [https://github.com/diegovitor90/conseg-mobilidade.git](https://github.com/diegovitor90/conseg-mobilidade.git)
+cd conseg-mobilidade
+```
+
+### 2. Entre na pasta do projeto Django
+
+```bash
+cd setup
+```
+
+### 3. Crie e ative o ambiente virtual
+
+#### Windows — PowerShell
 
 ```powershell
-cd setup
 py -m venv venv
 .\venv\Scripts\Activate.ps1
+```
+
+#### Linux ou macOS
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 4. Instale as dependências
+
+```bash
 python -m pip install -r requirements.txt
+```
+
+### 5. Execute as migrations
+
+```bash
 python manage.py migrate
+```
+
+### 6. Crie um superusuário
+
+```bash
 python manage.py createsuperuser
+```
+
+Escolha seu próprio usuário e senha. O repositório não contém contas pré-criadas, banco com dados pessoais ou credenciais reais.
+
+### 7. Popule a frota didática opcionalmente
+
+```bash
 python manage.py popular_frota
+```
+
+Esse comando cria 8 veículos leves e 2 veículos coletivos para demonstração. Ele pode ser executado novamente sem alterar veículos já existentes.
+
+### 8. Inicie a aplicação
+
+```bash
 python manage.py runserver
 ```
 
-O comando `popular_frota` é opcional. Ele cria dados didáticos e pode ser executado novamente: não altera veículos que já existem.
+Acesse:
 
-Escolha seu próprio usuário e senha em `createsuperuser`. O pacote **não contém contas pré-criadas nem banco com dados pessoais**. As credenciais fictícias em `tests.py` existem apenas no banco temporário dos testes.
+- Aplicação: [http://127.0.0.1:8000/veiculos/](http://127.0.0.1:8000/veiculos/)
+- Login: [http://127.0.0.1:8000/contas/entrar/](http://127.0.0.1:8000/contas/entrar/)
+- Administração: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
-Se o PowerShell bloquear a ativação, não é necessário mudar a política de execução. Use o Python do ambiente diretamente:
+### Alternativa se o PowerShell bloquear a ativação
+
+Não é necessário alterar a política de execução. Use diretamente o Python do ambiente virtual:
 
 ```powershell
 .\venv\Scripts\python.exe -m pip install -r requirements.txt
@@ -60,106 +265,101 @@ Se o PowerShell bloquear a ativação, não é necessário mudar a política de 
 .\venv\Scripts\python.exe manage.py runserver
 ```
 
-- Aplicação: [localhost:8000/veiculos/](http://127.0.0.1:8000/veiculos/)
-- Login: [localhost:8000/contas/entrar/](http://127.0.0.1:8000/contas/entrar/)
-- Admin: [localhost:8000/admin/](http://127.0.0.1:8000/admin/)
+## Tailwind CSS
 
-No Linux/macOS, troque `py` por `python3` para criar o ambiente e ative com `source venv/bin/activate`.
+O CSS já está compilado em `app.css`. Portanto, Node.js não é necessário para executar a aplicação.
 
-O CSS do Tailwind já está compilado em `app.css`. Portanto, **Node.js não é necessário para executar o sistema**. Ele só é necessário para alterar ou recompilar os estilos:
+Use Node.js somente se precisar alterar ou recompilar os estilos:
 
-```powershell
+```bash
 npm install
 npm run build:css
 ```
 
-Durante a edição visual, use `npm run watch:css` para recompilar automaticamente.
+Durante ajustes visuais:
 
-## Testar
+```bash
+npm run watch:css
+```
 
-Na pasta `setup/`, com o ambiente ativado:
+## Como testar
 
-```powershell
+Dentro da pasta `setup/`, com o ambiente virtual ativado:
+
+```bash
 python manage.py check
 python manage.py makemigrations --check --dry-run
 python manage.py test reservas
 ```
 
-As migrations necessárias estão incluídas. Em uma instalação nova, use `migrate`; não é preciso recriá-las.
+As migrations necessárias estão incluídas. Em uma instalação nova, execute apenas:
 
-## Rotas implementadas
+```bash
+python manage.py migrate
+```
 
-| Rota | Função |
-| --- | --- |
-| `/` | Redireciona para veículos |
-| `/veiculos/` | Lista, pesquisa, filtros e paginação |
-| `/veiculos/novo/` | Cadastro |
-| `/veiculos/<id>/` | Detalhes |
-| `/veiculos/<id>/editar/` | Edição e reativação |
-| `/veiculos/<id>/desativar/` | Confirmação e desativação por POST |
-| `/veiculos/<id>/excluir/` | Confirmação e exclusão protegida por POST |
-| `/contas/entrar/` | Login |
-| `/contas/sair/` | Logout por POST |
-| `/admin/` | Administração dos três models |
+Não é necessário recriar migrations existentes.
 
-Todas as rotas de veículos usam o namespace `reservas`. Exemplo: `reservas:veiculo_lista`.
+## Limitações atuais e próximos passos
 
-## Permissões
+Esta é uma aplicação acadêmica para execução local e representa a primeira entrega técnica do PBL 2.
 
-O superusuário tem acesso completo. Para uma conta comum, conceda as permissões em Usuários ou Grupos no Admin:
+Ainda não estão concluídos:
 
-- `view_veiculo`: consultar.
-- `view_veiculo` + `add_veiculo`: cadastrar.
-- `view_veiculo` + `change_veiculo`: editar, desativar e reativar.
-- `view_veiculo` + `delete_veiculo`: excluir quando não há reservas.
+- CRUD próprio de reservas
+- CRUD próprio de motoristas
+- API JSON
+- Board final do projeto
+- Apresentação final
+- Deploy em ambiente de produção
 
-A interface própria não exige `is_staff`. O Admin exige usuário da equipe e as permissões dos respectivos models. Os botões são ocultados conforme a permissão, mas o bloqueio também ocorre no servidor.
+### Considerações para produção
 
-## Regras de negócio
+Antes de uso operacional em produção, seria necessário implementar e validar:
 
-- Leve: 4 passageiros. Coletivo: 18. A capacidade é calculada pelo model, nunca aceita do navegador.
-- Código de veículo único, sem espaços nas extremidades e salvo em maiúsculas.
-- Quantidade de passageiros entre 1 e 18.
-- Nova reserva não pode ter data no passado.
-- Retorno posterior à saída, no mesmo dia.
-- Veículo e motorista podem ser escolhidos depois, conforme o README do PBL 1.
-- Sem sobreposição de veículo ou de motorista: intervalos adjacentes são permitidos.
-- Recursos inativos não recebem novas reservas.
-- Categoria pretendida é uma preferência; a capacidade do veículo efetivamente alocado determina a adequação.
-- Reservas passadas permitem corrigir dados descritivos, mas não data, horários, passageiros ou alocação.
+- Banco de dados gerenciado, como PostgreSQL
+- Variáveis de ambiente e chave secreta exclusiva
+- `DEBUG = False`
+- HTTPS
+- Estratégia de backup
+- Proteção contra tentativas repetidas de login
+- Observabilidade e logs
+- Estratégia de concorrência e transações para evitar corridas entre reservas simultâneas
+- Testes de carga e concorrência
 
-Decisões de proteção acrescentadas nesta adaptação:
+As validações de conflito são seguras no fluxo sequencial atual. Porém, esta versão não promete impedir conflitos quando múltiplos processos criam reservas simultaneamente. Para esse cenário, seriam necessários mecanismos adequados de transação e bloqueio, conforme o banco de dados escolhido.
 
-- `PROTECT` impede apagar veículos ou motoristas com reservas.
-- Categoria de um veículo com reservas não pode ser alterada, preservando a interpretação do histórico.
-- Desativar veículo ou motorista com reservas em andamento/futuras é bloqueado. Realoque as reservas antes.
-- Exclusões exigem POST, CSRF, permissão e confirmação explícita.
+Também evite criar ou alterar reservas usando:
 
-## Limites desta versão
+```python
+QuerySet.update()
+bulk_create()
+SQL direto
+```
 
-Aplicação acadêmica para execução local, sem configuração de produção. O JavaScript melhora o feedback, mas o servidor continua validando.
+Essas abordagens não executam `save()` ou `full_clean()` e podem contornar regras implementadas no domínio.
 
-As consultas de conflito são validadas no fluxo sequencial. Esta versão **não promete impedir corridas entre reservas simultâneas em múltiplos processos**. Antes de uso operacional, definir transações/bloqueios adequados e testar concorrência com o banco escolhido.
+## Contexto acadêmico
 
-`QuerySet.update()`, `bulk_create()` e SQL direto não executam `save()/full_clean()`. Não os use para criar/alterar reservas. As constraints incluídas protegem limites simples no banco, mas não toda regra entre registros.
+**Autor:** Diego Vitor Lopes Gonçalves Souza  
+**Curso:** Engenharia de Software — 5º período  
+**Instituição:** Universidade Dom Bosco — UNDB  
+**Disciplina:** Programação para Web  
+**Professor:** Danilo Costa  
+**Período:** 2026.2
 
-O fuso horário é `America/Fortaleza`. Para produção: chave secreta própria, DEBUG desligado, HTTPS, proteção contra tentativas repetidas de login, backups e estratégia de concorrência, entre outros controles.
+## Aprendizados
 
-## Organização
+Neste projeto, apliquei e aprofundei conhecimentos em:
 
-- `setup/setup/`: configurações e rotas principais.
-- `setup/reservas/models.py`: regras e entidades.
-- `setup/reservas/forms.py`: ModelForm de veículo e formulário de login.
-- `setup/reservas/views.py`: CRUD de veículos.
-- `setup/reservas/templates/`: páginas próprias.
-- `setup/reservas/static/reservas/`: Tailwind compilado, arquivo-fonte CSS, JavaScript e ícone.
-- `setup/package.json`: comandos e versão do Tailwind CSS usados no projeto.
-- `setup/reservas/tests.py`: testes automatizados.
-- `docs/IMPLEMENTACAO.md`: explicação da adaptação.
-- `docs/CHECKLIST_PBL2.md`: o que falta para as etapas seguintes.
-
-## Autoria e contexto
-
-Diego Vitor Lopes Gonçalves Souza  
-Engenharia de Software, 5º período, UNDB  
-Programação para Web · Prof. Danilo Costa · 2026.2
+- Desenvolvimento backend com Python e Django
+- Modelagem de dados e Django ORM
+- Operações CRUD
+- Validações no frontend e no backend
+- Regras de negócio
+- Autenticação e autorização
+- Controle de permissões
+- Segurança com CSRF e operações `POST`
+- Testes automatizados
+- Interface responsiva com Tailwind CSS
+- Documentação técnica e organização de projetoProgramação para Web · Prof. Danilo Costa · 2026.2
